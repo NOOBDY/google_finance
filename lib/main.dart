@@ -18,62 +18,29 @@ Future<Data> fetchData() async {
 }
 
 class Data {
-  List<List> list;
-  List<String> date;
-  List<double> open;
-  List<double> high;
-  List<double> low;
-  List<double> close;
-  List<int> volume;
+  List<Map> list;
 
   Data({
     this.list,
-    this.date,
-    this.open,
-    this.high,
-    this.low,
-    this.close,
-    this.volume,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) {
     Map data = json['Time Series (Daily)'];
 
-    List<List> list = List();
-
-    List<String> date = List();
-    List<double> open = List();
-    List<double> high = List();
-    List<double> low = List();
-    List<double> close = List();
-    List<int> volume = List();
+    List<Map> list = List();
 
     data.forEach((key, value) {
-      list.add([
-        key,
-        double.parse(value['1. open']),
-        double.parse(value['2. high']),
-        double.parse(value['3. low']),
-        double.parse(value['4. close']),
-        int.parse(value['5. volume']),
-      ]);
-
-      date.add(key);
-      open.add(double.parse(value['1. open']));
-      high.add(double.parse(value['2. high']));
-      low.add(double.parse(value['3. low']));
-      close.add(double.parse(value['4. close']));
-      volume.add(int.parse(value['5. volume']));
+      list.add(
+        {
+          'open': double.parse(value['1. open']),
+          'high': double.parse(value['2. high']),
+          'low': double.parse(value['3. low']),
+          'close': double.parse(value['4. close']),
+          'volumeto': double.parse(value['5. volume']),
+        },
+      );
     });
-    return new Data(
-      list: list,
-      date: date,
-      open: open,
-      high: high,
-      low: low,
-      close: close,
-      volume: volume,
-    );
+    return new Data(list: list);
   }
 }
 
@@ -106,40 +73,9 @@ class _AppState extends State<App> {
             future: futureData,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List _list = snapshot.data.list;
-                Data _data = snapshot.data;
-                // List<charts.Series<dynamic, num>> _createData() {
-                //   final data = _list;
-                //   return [
-                //     new charts.Series(
-                //       id: 'bruh',
-                //       data: data,
-                //       domainFn: null,
-                //       measureFn: null,
-                //     )
-                //   ];
-                // }
-
-                // return charts.LineChart(_createData());
-
-                // return ListView.builder(
-                //   itemCount: _list.length,
-                //   itemBuilder: (context, index) {
-                //     return ListTile(
-                //       title: Text(
-                //         'date: ${_data.date[index]}\nopen: ${_data.open[index]}\nhigh: ${_data.high[index]}\nlow: ${_data.low[index]}\nvolume: ${_data.volume[index]}\n',
-                //         style: TextStyle(
-                //           fontFamily: 'Roboto Mono',
-                //           fontSize: 20,
-                //           color: Colors.white,
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // );
-
+                List _data = snapshot.data.list;
                 return new OHLCVGraph(
-                  data: [_list],
+                  data: _data,
                   enableGridLines: true,
                   volumeProp: 0.2,
                 );
@@ -150,7 +86,7 @@ class _AppState extends State<App> {
             },
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
       ),
     );
   }
