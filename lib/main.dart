@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'chart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,7 +17,7 @@ Future<Data> fetchData() async {
 }
 
 class Data {
-  List<charts.Series> seriesList;
+  List<charts.Series<dynamic, DateTime>> seriesList;
 
   Data({
     this.seriesList,
@@ -27,21 +26,30 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) {
     Map data = json['Time Series (Daily)'];
 
-    List list = List();
+    List<ChartData> open = List();
 
-    data.forEach((key, value) {
-      list.add(
-
-          // {
-          //   'open': double.parse(value['1. open']),
-          //   'high': double.parse(value['2. high']),
-          //   'low': double.parse(value['3. low']),
-          //   'close': double.parse(value['4. close']),
-          //   'volumeto': double.parse(value['5. volume']),
-          // },
-          );
-    });
-    return new Data(seriesList: [charts.Series()]);
+    data.forEach(
+      (key, value) {
+        open.add(
+          new ChartData(
+            new DateTime(
+              int.parse(key.substring(0, 4)),
+              int.parse(key.substring(5, 7)),
+              int.parse(key.substring(8)),
+            ),
+            double.parse(value['1. open']),
+          ),
+        );
+      },
+    );
+    return new Data(seriesList: [
+      charts.Series<ChartData, DateTime>(
+        id: 'test',
+        domainFn: (ChartData data, _) => data.time,
+        measureFn: (ChartData data, _) => data.val,
+        data: open,
+      )
+    ]);
   }
 }
 
@@ -74,8 +82,12 @@ class _AppState extends State<App> {
             future: futureData,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List _data = snapshot.data.seriesList;
-                return charts.LineChart(_data);
+                List<charts.Series<dynamic, DateTime>> _data =
+                    snapshot.data.seriesList;
+                return charts.TimeSeriesChart(
+                  _data,
+                  animate: false,
+                );
               } else if (snapshot.hasError) {
                 return Text('${snapshot.hasError}');
               }
@@ -87,4 +99,11 @@ class _AppState extends State<App> {
       ),
     );
   }
+}
+
+class ChartData {
+  final DateTime time;
+  final double val;
+
+  ChartData(this.time, this.val);
 }
