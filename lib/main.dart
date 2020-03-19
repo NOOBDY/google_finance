@@ -131,14 +131,14 @@ class _AppState extends State<App> {
       title: 'Test',
       home: Scaffold(
         body: Center(
-          child: SizedBox(
-            child: FutureBuilder<Data>(
-              future: futureData,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<charts.Series<dynamic, DateTime>> _data =
-                      snapshot.data.seriesList;
-                  return charts.TimeSeriesChart(
+          child: FutureBuilder<Data>(
+            future: futureData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<charts.Series<dynamic, DateTime>> _data =
+                    snapshot.data.seriesList;
+                return SizedBox(
+                  child: charts.TimeSeriesChart(
                     _data,
                     animate: false,
                     primaryMeasureAxis: new charts.NumericAxisSpec(
@@ -146,14 +146,14 @@ class _AppState extends State<App> {
                         zeroBound: false,
                       ),
                     ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.hasError}');
-                }
-                return CircularProgressIndicator();
-              },
-            ),
-            height: 400,
+                  ),
+                  height: 400,
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.hasError}');
+              }
+              return CircularProgressIndicator();
+            },
           ),
         ),
         backgroundColor: Colors.white,
