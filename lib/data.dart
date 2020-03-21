@@ -32,7 +32,7 @@ class Data {
 
     data.forEach(
       (key, value) {
-        if (counter < 30) {
+        if (counter < 20) {
           open.add(
             new ChartData(
               new DateTime(

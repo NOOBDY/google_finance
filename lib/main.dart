@@ -35,7 +35,7 @@ class _AppState extends State<App> {
           title: Text(
             '$symbol',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 40,
               fontFamily: 'Product Sans',
             ),
@@ -49,11 +49,9 @@ class _AppState extends State<App> {
             future: futureData,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<charts.Series<dynamic, DateTime>> _data =
-                    snapshot.data.seriesList;
                 return SizedBox(
                   child: charts.TimeSeriesChart(
-                    _data,
+                    snapshot.data.seriesList,
                     animate: false,
                     primaryMeasureAxis: new charts.NumericAxisSpec(
                       tickProviderSpec: new charts.BasicNumericTickProviderSpec(
@@ -70,7 +68,7 @@ class _AppState extends State<App> {
             },
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[900],
       ),
     );
   }
