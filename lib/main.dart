@@ -7,16 +7,24 @@ import 'data.dart';
 String apiKey = 'TT1KDKHC0BDTBO6A';
 String symbol = 'GOOGL';
 
-void main() => runApp(App());
+void main() => runApp(FutureWidget());
 
-class App extends StatefulWidget {
-  App({Key key}) : super(key: key);
-
-  @override
-  _AppState createState() => _AppState();
+class App extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(),
+    );
+  }
 }
 
-class _AppState extends State<App> {
+class FutureWidget extends StatefulWidget {
+  FutureWidget({Key key}) : super(key: key);
+
+  @override
+  FutureState createState() => FutureState();
+}
+
+class FutureState extends State<FutureWidget> {
   Future<Data> futureData;
 
   @override
