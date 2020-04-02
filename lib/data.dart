@@ -112,6 +112,7 @@ class Data {
           domainFn: (ChartData data, _) => data.time,
           measureFn: (ChartData data, _) => data.val,
           data: volume,
+          colorFn: (_, __) => charts.Color.fromHex(code: '#48487c'),
         )..setAttribute(charts.measureAxisIdKey, 'axis 2'),
       ],
     );

@@ -28,9 +28,21 @@ class App extends StatelessWidget {
           elevation: 0,
         ),
         body: Center(
-          child: FutureWidget(
-            apiKey: apiKey,
-            symbol: symbol,
+          child: SizedBox(
+            child: Container(
+              child: FutureWidget(
+                apiKey: apiKey,
+                symbol: symbol,
+              ),
+              decoration: new BoxDecoration(
+                color: Color(0xff0b0b19),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(15),
+                ),
+              ),
+            ),
+            width: 350,
+            height: 350,
           ),
         ),
         backgroundColor: Color(0xff1f1f3a),
