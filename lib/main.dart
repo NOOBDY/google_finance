@@ -29,7 +29,10 @@ class App extends StatelessWidget {
           elevation: 0,
         ),
         body: Center(
-          child: FutureWidget(),
+          child: FutureWidget(
+            apiKey: apiKey,
+            symbol: symbol,
+          ),
         ),
         backgroundColor: Color(0xff1f1f3a),
       ),
@@ -39,7 +42,11 @@ class App extends StatelessWidget {
 }
 
 class FutureWidget extends StatefulWidget {
-  FutureWidget({Key key}) : super(key: key);
+  FutureWidget({
+    Key key,
+    String apiKey,
+    String symbol,
+  }) : super(key: key);
 
   @override
   FutureState createState() => FutureState(fetchData(apiKey, symbol));

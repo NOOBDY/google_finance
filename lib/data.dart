@@ -61,7 +61,7 @@ class Data {
 
 class ChartData {
   final DateTime time;
-  final double val;
+  final num val;
 
   ChartData(this.time, this.val);
 }
