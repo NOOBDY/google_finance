@@ -36,9 +36,11 @@ class FutureState extends State<FutureWidget> {
         } else if (snapshot.hasError) {
           return Text('${snapshot.hasError}');
         }
-        return CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Color(0xff48487c)),
-          backgroundColor: Colors.transparent,
+        return Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xff48487c)),
+            backgroundColor: Colors.transparent,
+          ),
         );
       },
     );
