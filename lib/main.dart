@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -61,10 +62,18 @@ class FutureState extends State<FutureWidget> {
               snapshot.data.seriesList,
               animate: false,
               primaryMeasureAxis: new charts.NumericAxisSpec(
-                tickProviderSpec: new charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
+                tickProviderSpec: new charts.StaticNumericTickProviderSpec(
+                  <charts.TickSpec<num>>[
+                    charts.TickSpec(0, label: ''),
+                    charts.TickSpec(1, label: ''),
+                  ],
                 ),
               ),
+              disjointMeasureAxes:
+                  new LinkedHashMap<String, charts.NumericAxisSpec>.from({
+                'axis 1': new charts.NumericAxisSpec(),
+                'axis 2': new charts.NumericAxisSpec(),
+              }),
             ),
             height: 400,
           );
