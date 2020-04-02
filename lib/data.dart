@@ -1,4 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'dart:collection';
+import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -10,6 +12,39 @@ Future<Data> fetchData(String apiKey, String symbol) async {
     return Data.fromJson(json.decode(response.body));
   } else {
     throw Exception('Failed');
+  }
+}
+
+class StockChart extends StatelessWidget {
+  final List data;
+  final bool animate;
+
+  const StockChart({
+    Key key,
+    this.data,
+    this.animate,
+  }) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return charts.TimeSeriesChart(
+      data,
+      animate: animate,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+        tickProviderSpec: new charts.StaticNumericTickProviderSpec(
+          <charts.TickSpec<num>>[
+            charts.TickSpec(0, label: ''),
+            charts.TickSpec(1, label: ''),
+          ],
+        ),
+      ),
+      disjointMeasureAxes:
+          new LinkedHashMap<String, charts.NumericAxisSpec>.from(
+        {
+          'axis 1': new charts.NumericAxisSpec(),
+          'axis 2': new charts.NumericAxisSpec(),
+        },
+      ),
+    );
   }
 }
 
