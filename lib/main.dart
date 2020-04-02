@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'data.dart';
@@ -66,14 +65,9 @@ class FutureState extends State<FutureWidget> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return SizedBox(
-            child: charts.TimeSeriesChart(
-              snapshot.data.seriesList,
-              animate: false,
-              primaryMeasureAxis: new charts.NumericAxisSpec(
-                tickProviderSpec: new charts.BasicNumericTickProviderSpec(
-                  zeroBound: false,
-                ),
-              ),
+            child: StockChart(
+              data: snapshot.data.seriesList,
+              animate: true,
             ),
             height: 400,
           );
