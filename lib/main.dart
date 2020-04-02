@@ -42,17 +42,13 @@ class FutureWidget extends StatefulWidget {
   FutureWidget({Key key}) : super(key: key);
 
   @override
-  FutureState createState() => FutureState();
+  FutureState createState() => FutureState(fetchData(apiKey, symbol));
 }
 
 class FutureState extends State<FutureWidget> {
   Future<Data> futureData;
 
-  @override
-  void initState() {
-    super.initState();
-    futureData = fetchData(apiKey, symbol);
-  }
+  FutureState(this.futureData);
 
   @override
   Widget build(BuildContext context) {
