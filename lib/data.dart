@@ -1,7 +1,7 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:collection';
-import 'package:flutter/cupertino.dart';
 import 'dart:convert';
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<Data> fetchData(String apiKey, String symbol) async {
