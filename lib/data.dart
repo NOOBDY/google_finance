@@ -23,9 +23,6 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) {
     Map data = json['Time Series (Daily)'];
 
-    List<ChartData> open = List();
-    List<ChartData> high = List();
-    List<ChartData> low = List();
     List<ChartData> close = List();
 
     int counter = 0;
@@ -33,36 +30,6 @@ class Data {
     data.forEach(
       (key, value) {
         if (counter < 20) {
-          open.add(
-            new ChartData(
-              new DateTime(
-                int.parse(key.substring(0, 4)),
-                int.parse(key.substring(5, 7)),
-                int.parse(key.substring(8)),
-              ),
-              double.parse(value['1. open']),
-            ),
-          );
-          high.add(
-            new ChartData(
-              new DateTime(
-                int.parse(key.substring(0, 4)),
-                int.parse(key.substring(5, 7)),
-                int.parse(key.substring(8)),
-              ),
-              double.parse(value['2. high']),
-            ),
-          );
-          low.add(
-            new ChartData(
-              new DateTime(
-                int.parse(key.substring(0, 4)),
-                int.parse(key.substring(5, 7)),
-                int.parse(key.substring(8)),
-              ),
-              double.parse(value['3. low']),
-            ),
-          );
           close.add(
             new ChartData(
               new DateTime(
@@ -80,29 +47,13 @@ class Data {
     return new Data(
       seriesList: [
         charts.Series<ChartData, DateTime>(
-          id: 'open',
-          domainFn: (ChartData data, _) => data.time,
-          measureFn: (ChartData data, _) => data.val,
-          data: open,
-        ),
-        charts.Series<ChartData, DateTime>(
-          id: 'high',
-          domainFn: (ChartData data, _) => data.time,
-          measureFn: (ChartData data, _) => data.val,
-          data: high,
-        ),
-        charts.Series<ChartData, DateTime>(
-          id: 'low',
-          domainFn: (ChartData data, _) => data.time,
-          measureFn: (ChartData data, _) => data.val,
-          data: low,
-        ),
-        charts.Series<ChartData, DateTime>(
-          id: 'close',
-          domainFn: (ChartData data, _) => data.time,
-          measureFn: (ChartData data, _) => data.val,
-          data: close,
-        ),
+            id: 'close',
+            domainFn: (ChartData data, _) => data.time,
+            measureFn: (ChartData data, _) => data.val,
+            data: close,
+            colorFn: (_, __) => (close.first.val > close.last.val)
+                ? charts.Color.fromHex(code: '#64ddac')
+                : charts.Color.fromHex(code: '#cc2737')),
       ],
     );
   }

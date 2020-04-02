@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'data.dart';
 
 String apiKey = 'TT1KDKHC0BDTBO6A';
-String symbol = 'GOOGL';
+String symbol = 'ZM';
 
 void main() => runApp(App());
 
@@ -29,12 +29,9 @@ class App extends StatelessWidget {
           elevation: 0,
         ),
         body: Center(
-          child: FutureWidget(
-            apiKey: apiKey,
-            symbol: symbol,
-          ),
+          child: FutureWidget(),
         ),
-        backgroundColor: Colors.grey[900],
+        backgroundColor: Color(0xff1f1f3a),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -42,13 +39,7 @@ class App extends StatelessWidget {
 }
 
 class FutureWidget extends StatefulWidget {
-  final String apiKey;
-  final String symbol;
-  FutureWidget({
-    Key key,
-    this.apiKey,
-    this.symbol,
-  }) : super(key: key);
+  FutureWidget({Key key}) : super(key: key);
 
   @override
   FutureState createState() => FutureState(fetchData(apiKey, symbol));
@@ -81,7 +72,7 @@ class FutureState extends State<FutureWidget> {
           return Text('${snapshot.hasError}');
         }
         return CircularProgressIndicator(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
         );
       },
     );
