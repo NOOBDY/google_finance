@@ -29,7 +29,10 @@ class App extends StatelessWidget {
           elevation: 0,
         ),
         body: Center(
-          child: FutureWidget(),
+          child: FutureWidget(
+            apiKey: apiKey,
+            symbol: symbol,
+          ),
         ),
         backgroundColor: Colors.grey[900],
       ),
@@ -39,7 +42,13 @@ class App extends StatelessWidget {
 }
 
 class FutureWidget extends StatefulWidget {
-  FutureWidget({Key key}) : super(key: key);
+  final String apiKey;
+  final String symbol;
+  FutureWidget({
+    Key key,
+    this.apiKey,
+    this.symbol,
+  }) : super(key: key);
 
   @override
   FutureState createState() => FutureState(fetchData(apiKey, symbol));
@@ -72,7 +81,7 @@ class FutureState extends State<FutureWidget> {
           return Text('${snapshot.hasError}');
         }
         return CircularProgressIndicator(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
         );
       },
     );
