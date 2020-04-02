@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'data.dart';
 
-String apiKey = 'TT1KDKHC0BDTBO6A';
+String apiKey = '';
 String symbol = 'ZM';
 
 void main() => runApp(App());
@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         ),
         body: Center(
           child: FutureWidget(
-            apiKey: apiKey,
+            apiKey: 'TT1KDKHC0BDTBO6A',
             symbol: symbol,
           ),
         ),
@@ -42,10 +42,12 @@ class App extends StatelessWidget {
 }
 
 class FutureWidget extends StatefulWidget {
+  final String apiKey;
+  final String symbol;
   FutureWidget({
     Key key,
-    String apiKey,
-    String symbol,
+    this.apiKey,
+    this.symbol,
   }) : super(key: key);
 
   @override
