@@ -17,7 +17,7 @@ class App extends StatelessWidget {
           title: Text(
             '$symbol',
             style: TextStyle(
-              color: Colors.white,
+              color: Color(0xff48487c),
               fontSize: 40,
               fontFamily: 'Product Sans',
             ),
@@ -34,7 +34,7 @@ class App extends StatelessWidget {
                 symbol: symbol,
               ),
               decoration: new BoxDecoration(
-                color: Color(0xff0b0b19),
+                color: Color(0xff19192b),
                 borderRadius: BorderRadius.all(
                   Radius.circular(15),
                 ),
